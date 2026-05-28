@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CVYap — Ücretsiz Profesyonel CV Oluşturucu</title>
+<meta name="description" content="Profesyonel CV hazırlayın. 9 ATS uyumlu şablon, AI destekli yazım, PDF indirme.">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<div id="loading"><div class="spinner"></div><div id="load-msg">Yükleniyor...</div></div>
+<div id="toast"></div>
+
+<!-- Auth Modal -->
+<div class="overlay" id="auth-modal">
+  <div class="modal">
+    <button class="modal-x" id="modal-close-btn">×</button>
+    <h2>CVYap'a Hoş Geldiniz</h2>
+    <p class="sub">Ücretsiz hesap oluşturun, CV'nizi hazırlayın.</p>
+    <div class="m-tabs">
+      <div class="m-tab active" data-tab="login">Giriş Yap</div>
+      <div class="m-tab" data-tab="register">Üye Ol</div>
+    </div>
+    <div class="m-form active" id="mf-login">
+      <div class="fg"><label>E-posta</label><input id="l-email" type="email" placeholder="siz@email.com"></div>
+      <div class="fg"><label>Şifre</label><input id="l-pass" type="password" placeholder="••••••••"></div>
+      <button class="btn btn-primary btn-full" id="login-btn">Giriş Yap</button>
+      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px">
+        Hesabınız yok mu? <a class="switch-to-register" style="cursor:pointer;font-weight:600;color:var(--blue)">Üye Olun</a>
+      </p>
+    </div>
+    <div class="m-form" id="mf-register">
+      <div class="fg"><label>Ad Soyad</label><input id="r-name" type="text" placeholder="Ahmet Yılmaz"></div>
+      <div class="fg"><label>E-posta</label><input id="r-email" type="email" placeholder="siz@email.com"></div>
+      <div class="fg"><label>Şifre</label><input id="r-pass" type="password" placeholder="En az 6 karakter"></div>
+      <button class="btn btn-primary btn-full" id="register-btn">Ücretsiz Hesap Oluştur</button>
+      <p style="text-align:center;font-size:11px;color:var(--muted2);margin-top:10px">
+        Üye olarak <a href="#" style="color:var(--blue)">Kullanım Şartları</a>'nı kabul etmiş olursunuz.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="nav-logo" id="nav-logo">CV<em>Yap</em></div>
+  <div class="nav-mid">
+    <button class="nav-btn" data-go="templates">Şablonlar</button>
+    <button class="nav-btn" data-go="pricing">Fiyatlar</button>
+    <button class="nav-btn" data-scroll="sec-faq">SSS</button>
+    <button class="nav-btn" data-go="dashboard">CV'lerim</button>
+  </div>
+  <div class="nav-right" id="nav-auth"></div>
+</nav>
+
+<!-- ═══ ANA SAYFA ═══ -->
+<div id="pg-home" class="page active">
+  <section class="hero">
+    <div class="hero-badge">🏆 Türkiye'nin #1 CV Platformu</div>
+    <h1>Profesyonel <em>CV'nizi</em><br>Hızla Hazırlayın</h1>
+    <p class="hero-sub">9 ATS uyumlu şablon, AI destekli yazım yardımı ve yüksek kalite PDF indirme.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-xl" id="hero-start-btn">CV Oluştur →</button>
+      <button class="btn btn-outline btn-xl" data-go="templates">Şablonları Gör</button>
+    </div>
+    <div class="hero-trust">
+      <div><div class="trust-n">94K+</div><div class="trust-l">Oluşturulan CV</div></div>
+      <div><div class="trust-n">9</div><div class="trust-l">Profesyonel Şablon</div></div>
+      <div><div class="trust-n">AI</div><div class="trust-l">Destekli Yazım</div></div>
+      <div><div class="trust-n">4.9★</div><div class="trust-l">Kullanıcı Puanı</div></div>
+    </div>
+  </section>
+
+  <section class="sec sec-white">
+    <div class="con">
+      <div class="sec-head"><h2>Neden CVYap?</h2><p>Profesyonel CV hazırlamak hiç bu kadar kolay olmamıştı</p></div>
+      <div class="feat-grid">
+        <div class="feat-card"><div class="feat-icon">🎨</div><h3>9 Profesyonel Şablon</h3><p>Harvard, Oxford, Cambridge ve daha fazlası. Tüm şablonlar ATS uyumlu.</p></div>
+        <div class="feat-card"><div class="feat-icon">🤖</div><h3>AI Yazım Yardımı</h3><p>AI Destekli plan ile CV metinlerinizi yapay zeka ile geliştirin ve profesyonelleştirin.</p></div>
+        <div class="feat-card"><div class="feat-icon">👁️</div><h3>Canlı Önizleme</h3><p>Bilgi girerken CV'niz anında şekillenir. Gerçek zamanlı görün.</p></div>
+        <div class="feat-card"><div class="feat-icon">📄</div><h3>Yüksek Kalite PDF</h3><p>Puppeteer ile profesyonel baskı kalitesinde A4 PDF indirme.</p></div>
+        <div class="feat-card"><div class="feat-icon">☁️</div><h3>Bulut Kayıt</h3><p>CV'niz sunucuda saklanır. Her cihazdan erişin, sınırsız düzenleyin.</p></div>
+        <div class="feat-card"><div class="feat-icon">⚡</div><h3>Hızlı &amp; Kolay</h3><p>15 dakikada profesyonel CV'nizi tamamlayın. Teknik bilgi gerekmez.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt">
+    <div class="con">
+      <div class="sec-head"><h2>Göze Çarpan CV Oluştur</h2><p>9 profesyonel şablondan birini seçin</p></div>
+      <div class="tpl-grid" id="home-tpl-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Yükleniyor...</div>
+      </div>
+      <div style="text-align:center;margin-top:24px">
+        <button class="btn btn-outline btn-lg" data-go="templates">Tüm 9 Şablonu Gör →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiyatlandırma özeti -->
+  <section class="sec sec-white">
+    <div class="con">
+      <div class="sec-head"><h2>Basit Fiyatlandırma</h2><p>İhtiyacınıza göre seçin</p></div>
+      <div class="price-grid" style="max-width:780px;margin:0 auto">
+        <div class="price-card">
+          <div class="price-lbl">Ücretsiz</div>
+          <div class="price-amt">₺0</div>
+          <div class="price-desc">CV oluşturun, düzenleyin, önizleyin.</div>
+          <ul class="price-feats">
+            <li><span class="ck">✓</span> Sınırsız CV oluşturma</li>
+            <li><span class="ck">✓</span> 9 profesyonel şablon</li>
+            <li><span class="ck">✓</span> Canlı önizleme</li>
+            <li><span class="ck">✓</span> Bulut kayıt</li>
+            <li class="off"><span class="cx">✗</span> PDF indirme</li>
+            <li class="off"><span class="cx">✗</span> AI yazım yardımı</li>
+          </ul>
+          <button class="btn btn-outline btn-full" id="home-free-btn">Ücretsiz Başla</button>
+        </div>
+        <div class="price-card">
+          <div class="price-lbl">Tek CV</div>
+          <div class="price-amt"><sup>₺</sup>20</div>
+          <div class="price-desc">Hazırladığınız CV'yi indirin.</div>
+          <ul class="price-feats">
+            <li><span class="ck">✓</span> 1 CV PDF indirme</li>
+            <li><span class="ck">✓</span> Filigransız PDF</li>
+            <li><span class="ck">✓</span> Tüm şablonlar</li>
+            <li class="off"><span class="cx">✗</span> AI yazım yardımı</li>
+          </ul>
+          <button class="btn btn-outline btn-full home-single-btn">20 TL ile İndir</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" id="sec-faq">
+    <div class="con">
+      <div class="sec-head"><h2>Sık Sorulan Sorular</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q">PDF indirme nasıl çalışıyor?<span class="faq-icon">+</span></div><div class="faq-a">CV'nizi hazırladıktan sonra 20 TL ödeyerek PDF indirebilirsiniz. AI Destekli planda sınırsız indirme var.</div></div>
+        <div class="faq-item"><div class="faq-q">AI yazım yardımı ne yapıyor?<span class="faq-icon">+</span></div><div class="faq-a">Builder'da her metin alanının yanında "AI ile Geliştir" butonu çıkar. Yazdığınız metni yapay zeka profesyonelleştirir, güçlü eylem fiilleri ekler.</div></div>
+        <div class="faq-item"><div class="faq-q">Şablonlar ATS uyumlu mu?<span class="faq-icon">+</span></div><div class="faq-a">Evet! Tüm 9 şablonumuz Applicant Tracking System uyumludur.</div></div>
+        <div class="faq-item"><div class="faq-q">Kaç tane CV oluşturabilirim?<span class="faq-icon">+</span></div><div class="faq-a">Sınırsız! Farklı pozisyonlar için farklı CV'ler hazırlayın, hepsi bulutta saklanır. Sadece PDF indirmek ücretli.</div></div>
+        <div class="faq-item"><div class="faq-q">Ödeme güvenli mi?<span class="faq-icon">+</span></div><div class="faq-a">Tüm ödemeler Iyzico altyapısıyla 256-bit SSL üzerinden gerçekleşir.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background:var(--blue);text-align:center">
+    <div class="con">
+      <h2 style="color:#fff;margin-bottom:10px">Hemen CV Oluşturmaya Başlayın</h2>
+      <p style="color:rgba(255,255,255,.8);font-size:16px;margin-bottom:26px;max-width:420px;margin-left:auto;margin-right:auto">Ücretsiz kayıt olun, CV'nizi hazırlayın ve indirin.</p>
+      <button class="btn btn-xl" id="cta-btn" style="background:#fff;color:var(--blue);font-weight:800">Ücretsiz Başla →</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="con">
+      <div class="ft-grid">
+        <div><div class="ft-logo">CVYap</div><p class="ft-desc">Profesyonel CV oluşturma platformu. 9 şablon, AI destekli yazım, gerçek PDF.</p></div>
+        <div class="ft-col"><h5>Ürün</h5><a id="ft-builder">CV Oluştur</a><a data-go="templates">Şablonlar</a><a data-go="pricing">Fiyatlar</a></div>
+        <div class="ft-col"><h5>Hesap</h5><a data-modal="login">Giriş Yap</a><a data-modal="register">Üye Ol</a><a data-go="dashboard">CV'lerim</a></div>
+        <div class="ft-col"><h5>Hukuki</h5><a href="#">Kullanım Şartları</a><a href="#">Gizlilik</a><a href="#">KVKK</a></div>
+      </div>
+      <div class="ft-bottom"><span>© 2024 CVYap</span><span>🔒 SSL · 🇹🇷 Türkiye</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══ ŞABLONLAR ═══ -->
+<div id="pg-templates" class="page">
+  <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);padding:48px 4% 40px;text-align:center">
+    <h1 style="margin-bottom:10px">CV Şablonları</h1>
+    <p style="font-size:16px;color:var(--muted);max-width:460px;margin:0 auto 22px">9 profesyonel, ATS uyumlu şablon.</p>
+    <button class="btn btn-primary btn-lg" id="tpl-page-start-btn">CV Oluşturmaya Başla →</button>
+  </div>
+  <div class="sec sec-white"><div class="con"><div class="tpl-grid" id="tpl-showcase"></div></div></div>
+</div>
+
+<!-- ═══ FİYATLANDIRMA ═══ -->
+<div id="pg-pricing" class="page">
+  <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);padding:48px 4% 40px;text-align:center">
+    <h1 style="margin-bottom:10px">Fiyatlandırma</h1>
+    <p style="font-size:16px;color:var(--muted)">Şeffaf ve basit. Gizli ücret yok.</p>
+  </div>
+  <div class="sec sec-white">
+    <div class="con">
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-lbl">Ücretsiz</div>
+          <div class="price-amt">₺0</div>
+          <div class="price-desc">Sınırsız CV oluşturun ve düzenleyin.</div>
+          <ul class="price-feats">
+            <li><span class="ck">✓</span> Sınırsız CV oluşturma</li>
+            <li><span class="ck">✓</span> 9 profesyonel şablon</li>
+            <li><span class="ck">✓</span> Canlı önizleme</li>
+            <li><span class="ck">✓</span> Bulut kayıt</li>
+            <li><span class="ck">✓</span> Sınırsız düzenleme</li>
+            <li class="off"><span class="cx">✗</span> PDF indirme</li>
+            <li class="off"><span class="cx">✗</span> AI yazım yardımı</li>
+          </ul>
+          <button class="btn btn-outline btn-full" id="pricing-free-btn">Ücretsiz Başla</button>
+        </div>
+        <div class="price-card">
+          <div class="price-lbl">Tek CV İndirme</div>
+          <div class="price-amt"><sup>₺</sup>20</div>
+          <div class="price-desc">Bir kerelik ödeme ile 1 CV indirme hakkı.</div>
+          <ul class="price-feats">
+            <li><span class="ck">✓</span> 1 CV PDF indirme hakkı</li>
+            <li><span class="ck">✓</span> Filigransız, yüksek kalite</li>
+            <li><span class="ck">✓</span> Tüm 9 şablon</li>
+            <li><span class="ck">✓</span> İstediğin şablonla</li>
+            <li class="off"><span class="cx">✗</span> AI yazım yardımı</li>
+          </ul>
+          <button class="btn btn-outline btn-full pricing-single-btn">20 TL ile Satın Al</button>
+        </div>
+        <div class="price-card pop">
+          <div class="pop-badge">🤖 AI Destekli</div>
+          <div class="price-lbl">AI Destekli Plan</div>
+          <div class="price-amt"><sup>₺</sup>50<small>/ay</small></div>
+          <div class="price-desc">Sınırsız indirme ve AI yazım yardımı.</div>
+          <ul class="price-feats">
+            <li><span class="ck">✓</span> Sınırsız PDF indirme</li>
+            <li><span class="ck">✓</span> AI ile metin geliştirme</li>
+            <li><span class="ck">✓</span> Özet bölümü AI'ı</li>
+            <li><span class="ck">✓</span> Deneyim açıklaması AI'ı</li>
+            <li><span class="ck">✓</span> Tüm şablonlar</li>
+            <li><span class="ck">✓</span> İstediğin zaman iptal</li>
+          </ul>
+          <button class="btn btn-primary btn-full pricing-ai-btn">50 TL/ay Başla →</button>
+        </div>
+      </div>
+      <div style="max-width:600px;margin:32px auto 0;background:var(--blue-ll);border:1px solid var(--blue-l);border-radius:var(--r-lg);padding:20px;text-align:center">
+        <div style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:6px">🤖 AI Destekli Plan Nedir?</div>
+        <p style="font-size:13px;color:var(--text2)">CV builder'da her metin alanının yanında <b>"AI ile Geliştir"</b> butonu çıkar. Yazdığınız metni Claude yapay zekası profesyonelleştirir, güçlü eylem fiilleri ekler, ATS sistemleri için optimize eder.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BUILDER ═══ -->
+<div id="pg-builder" class="page page-builder">
+  <div class="builder-wrap">
+    <div class="b-left">
+      <div class="b-topbar">
+        <span class="b-topbar-title">CV Oluşturma Sihirbazı</span>
+        <div class="step-pills">
+          <div class="s-pill" data-step="0">1</div>
+          <div class="s-pill" data-step="1">2</div>
+          <div class="s-pill" data-step="2">3</div>
+          <div class="s-pill" data-step="3">4</div>
+          <div class="s-pill" data-step="4">5</div>
+        </div>
+        <button class="btn btn-sm" id="builder-back-btn" style="background:rgba(255,255,255,.15);color:#fff;border:none;font-size:11px">← Çıkış</button>
+      </div>
+      <div class="b-steps">
+        <!-- Adım 1: Kişisel -->
+        <div class="b-step" id="bs-0">
+          <div class="step-hd"><h3>Kişisel Bilgiler</h3><p>İşverenler sizi nasıl tanıyacak?</p></div>
+          <div class="row2">
+            <div class="fg"><label>Ad *</label><input id="p-firstName" placeholder="Ahmet"></div>
+            <div class="fg"><label>Soyad *</label><input id="p-lastName" placeholder="Yılmaz"></div>
+          </div>
+          <div class="fg"><label>Meslek / Ünvan</label><input id="p-jobTitle" placeholder="Yazılım Mühendisi"></div>
+          <div class="row2">
+            <div class="fg"><label>E-posta</label><input id="p-email" type="email" placeholder="ahmet@email.com"></div>
+            <div class="fg"><label>Telefon</label><input id="p-phone" type="tel" placeholder="0532 123 45 67"></div>
+          </div>
+          <div class="row2">
+            <div class="fg"><label>Şehir</label><input id="p-city" placeholder="İstanbul"></div>
+            <div class="fg"><label>LinkedIn</label><input id="p-linkedin" placeholder="linkedin.com/in/ahmet"></div>
+          </div>
+          <!-- Fotoğraf yükleme -->
+          <div class="fg" id="photo-field-wrap">
+            <label>Profil Fotoğrafı <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none">(Oxford, Berkeley, Edinburgh şablonlarında görünür)</span></label>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+              <div id="photo-preview" style="width:56px;height:56px;border-radius:50%;background:var(--bg2);border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px;flex-shrink:0;overflow:hidden">👤</div>
+              <div style="flex:1">
+                <label class="btn btn-ghost btn-sm" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+                  📷 Fotoğraf Seç
+                  <input type="file" id="p-photo-input" accept="image/*" style="display:none">
+                </label>
+                <button id="p-photo-remove" class="btn btn-sm" style="color:var(--red);border-color:var(--red);background:none;display:none;margin-left:6px">Kaldır</button>
+                <div style="font-size:11px;color:var(--muted);margin-top:5px">JPG, PNG · Maks 2MB · Kare fotoğraf önerilir</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Hakkımda / Özet</label>
+            <textarea id="p-summary" placeholder="Kısa ve etkileyici bir profesyonel özet yazın..."></textarea>
+          </div>
+        </div>
+        <!-- Adım 2: Deneyim -->
+        <div class="b-step" id="bs-1">
+          <div class="step-hd"><h3>İş Deneyimi</h3><p>En güncel deneyiminizden başlayın</p></div>
+          <div id="exp-list"></div>
+          <button class="add-btn" id="add-exp-btn">＋ İş Deneyimi Ekle</button>
+        </div>
+        <!-- Adım 3: Eğitim -->
+        <div class="b-step" id="bs-2">
+          <div class="step-hd"><h3>Eğitim</h3><p>Eğitim geçmişinizi ekleyin</p></div>
+          <div id="edu-list"></div>
+          <button class="add-btn" id="add-edu-btn">＋ Eğitim Ekle</button>
+        </div>
+        <!-- Adım 4: Beceriler -->
+        <div class="b-step" id="bs-3">
+          <div class="step-hd"><h3>Beceriler &amp; Diller</h3><p>Güçlü yönlerinizi öne çıkarın</p></div>
+          <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Beceriler</div>
+          <div id="sk-list"></div>
+          <button class="add-btn" id="add-skill-btn">＋ Beceri Ekle</button>
+          <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin:18px 0 8px">Diller</div>
+          <div id="lang-list"></div>
+          <button class="add-btn" id="add-lang-btn">＋ Dil Ekle</button>
+        </div>
+        <!-- Adım 5: Şablon -->
+        <div class="b-step" id="bs-4">
+          <div class="step-hd"><h3>Şablon &amp; Renk</h3><p>Kişiliğinize uygun tasarımı seçin</p></div>
+          <div class="tpl-pick-grid" id="tpl-pick-grid"></div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Vurgu Rengi</div>
+            <div class="color-row" id="color-picker"></div>
+          </div>
+          <div class="fg" style="margin-top:14px">
+            <label>CV Başlığı</label>
+            <input type="text" id="cv-title-input" value="CV'm">
+          </div>
+        </div>
+      </div>
+      <div class="b-nav">
+        <button id="btn-prev" class="btn btn-ghost btn-sm">← Önceki</button>
+        <span class="b-nav-lbl" id="step-lbl">Adım 1 / 5</span>
+        <button id="btn-next" class="btn btn-primary btn-sm">Sonraki →</button>
+      </div>
+    </div>
+    <div class="b-right">
+      <div class="prev-bar">
+        <div class="prev-title"><div class="live-dot"></div> Canlı Önizleme</div>
+        <div style="display:flex;gap:7px">
+          <button class="btn btn-ghost btn-sm" id="save-cv-btn">💾 Kaydet</button>
+          <button class="btn btn-primary btn-sm" id="pdf-btn">⬇ PDF İndir</button>
+        </div>
+      </div>
+      <div class="prev-area">
+        <div style="width:100%;max-width:560px">
+          <div id="cv-paper" class="cv-paper">
+            <iframe id="cv-frame" class="cv-frame" scrolling="no"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ÖDEME ═══ -->
+<div id="pg-payment" class="page">
+  <div class="pay-wrap">
+    <button class="btn btn-ghost btn-sm" id="pay-back-btn" style="margin-bottom:22px">← Geri Dön</button>
+    <div class="pay-grid">
+      <div class="pay-left">
+        <h2>Plan Seçin</h2>
+        <p class="sub">PDF indirme ve AI özellikleri için ödeme yapın.</p>
+        <div class="plan-opts">
+          <div class="plan-opt active" data-plan="single">
+            <div class="plan-opt-l">
+              <input type="radio" name="plan" checked>
+              <div><div class="plan-name">Tek CV İndirme</div><div class="plan-period">Bir kerelik · 1 PDF indirme</div></div>
+            </div>
+            <div><div class="plan-price">₺20</div></div>
+          </div>
+          <div class="plan-opt" data-plan="ai">
+            <div class="plan-opt-l">
+              <input type="radio" name="plan">
+              <div><div class="plan-name">🤖 AI Destekli Plan</div><div class="plan-period">Aylık · Sınırsız indirme + AI</div></div>
+            </div>
+            <div><div class="plan-price">₺50/ay</div></div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:11px">Kart Bilgileri</div>
+        <div class="card-logos">
+          <div class="card-logo">VISA</div><div class="card-logo">MC</div><div class="card-logo">TROY</div>
+          <span style="font-size:11px;color:var(--muted);margin-left:6px">🔒 Iyzico · SSL</span>
+        </div>
+        <div class="fg"><label>Kart Üzerindeki Ad</label><input id="c-name" type="text" placeholder="Ahmet Yılmaz"></div>
+        <div class="fg"><label>Kart Numarası</label><input id="c-num" type="text" placeholder="•••• •••• •••• ••••" maxlength="19"></div>
+        <div class="row2">
+          <div class="fg"><label>Son Kullanma</label><input id="c-exp" type="text" placeholder="AA/YY" maxlength="5"></div>
+          <div class="fg"><label>CVV</label><input id="c-cvv" type="text" placeholder="•••" maxlength="4"></div>
+        </div>
+        <button class="pay-btn" id="pay-btn">Ödemeyi Tamamla →</button>
+        <div class="secure-line">🔒 Güvenli · Iyzico · PCI-DSS</div>
+      </div>
+      <div>
+        <div class="order-card">
+          <h3>Sipariş Özeti</h3>
+          <div class="order-row"><span>Ürün</span><span>Tek CV İndirme</span></div>
+          <div class="order-row"><span>İçerik</span><span style="font-size:12px;color:var(--muted)">1 PDF indirme hakkı</span></div>
+          <div class="order-total"><span>Toplam</span><span>₺20</span></div>
+          <div class="order-incl">
+            <h5>Dahil</h5>
+            <ul>
+              <li>Filigransız yüksek kalite PDF</li>
+              <li>Tüm 9 şablon</li>
+              <li>A4 baskı kalitesi</li>
+            </ul>
+          </div>
+        </div>
+        <div class="guarantee">🔒 Güvenli ödeme garantisi</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BAŞARI ═══ -->
+<div id="pg-success" class="page">
+  <div class="center-pg">
+    <div class="succ-box">
+      <div class="succ-icon">✅</div>
+      <h2 style="margin-bottom:8px">Ödeme Başarılı!</h2>
+      <p style="color:var(--muted);margin-bottom:22px;line-height:1.7;font-size:14px" id="success-msg">Planınız aktif edildi.</p>
+      <button class="btn btn-primary btn-full btn-lg" id="success-build-btn" style="margin-bottom:9px">CV İndir →</button>
+      <button class="btn btn-ghost btn-full" id="success-home-btn">Ana Sayfaya Dön</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="pg-dashboard" class="page">
+  <div class="dash-wrap">
+    <div class="dash-hd">
+      <div>
+        <h2>CV'lerim</h2>
+        <div id="plan-info" style="font-size:13px;color:var(--muted);margin-top:4px"></div>
+      </div>
+      <button class="btn btn-primary" id="new-cv-btn">＋ Yeni CV</button>
+    </div>
+    <div class="cv-cards" id="cv-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ PROFİL ═══ -->
+<div id="pg-profile" class="page">
+  <div style="max-width:520px;margin:0 auto;padding:36px 4%">
+    <h2 style="margin-bottom:22px">Hesabım</h2>
+    <div id="profile-info">
+      <div style="text-align:center;padding:40px;color:var(--muted)">
+        <p>Profil bilgilerinizi görmek için <span id="profile-login-link" style="cursor:pointer;font-weight:600;color:var(--blue)">giriş yapın</span>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REKLAM BANNER ═══ -->
+<div class="ad-banner">
+  <div class="ad-inner">
+    <span class="ad-label">Reklam</span>
+    <!-- Google AdSense buraya:
+    <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    <div style="text-align:center;color:var(--muted2)">
+      <div style="font-size:13px;font-weight:600;color:var(--text2)">728 × 90 Reklam Alanı</div>
+      <div style="font-size:11px;margin-top:3px">Google AdSense kodu buraya gelecek</div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/templates.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
